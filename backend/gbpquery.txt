@@ -1,0 +1,80 @@
+Create an app to preform crud operations on the below model including cloudinary and multer file upload const mongoose = require('mongoose');
+const InventorySchema = new mongoose.Schema(
+  {
+    url: {
+      type: String,
+      required: true,
+    },
+    public_id: {
+      type: String,
+      required: true,
+    },
+    rekaStockId: {
+      type: String,
+      trim: true
+    },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId, // Assuming that createdBy refers to the User who created the inventory item
+      ref: 'User',
+    },
+    productDescription: {
+      type: String,
+      trim: true
+    },
+    file_path: {
+      type: String,
+    },
+    file_mimetype: {
+      type: String,
+    },
+    supplier: {
+      type: String,
+    },
+    manufacturepn: {
+      type: String,
+    },
+    quantity: {
+      type: Number,
+    },
+    color: {
+      type: String,
+    },
+    department: {
+      type: mongoose.Schema.Types.ObjectId, // Assuming that department refers to a Category that the item belongs to
+      ref: 'Category',
+    },
+    brands: {
+      type: String,
+    },
+    store: {
+      type: String,
+    },
+    likes: {
+      type: Number, // Assuming that likes, comments, and shares are numerical values
+      default: 0,
+    },
+    comments: {
+      type: Number,
+      default: 0,
+    },
+    shares: {
+      type: Number,
+      default: 0,
+    },
+    status: {
+      type: String,
+      enum: ['draft', 'published'], // Assuming that the status refers to the current state of the inventory item
+      default: 'draft',
+    },
+    uploadedOnline: {
+      type: Boolean, // Assuming that uploadedOnline refers to whether the item has been uploaded to the ecommerce website or not
+      default: false,
+    },     
+  },
+  {
+    timestamps: true
+  },
+);
+
+const Inventory = mongoose.model("Inventory", InventorySchema);
+module.exports = Inventory;
