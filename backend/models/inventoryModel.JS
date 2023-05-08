@@ -10,7 +10,7 @@ const InventorySchema = new mongoose.Schema(
         type: String,
         trim: true
     },
-    rekaStockId: {
+    KhonaMartStockId: {
         type: String, // ---
         trim: true
     },
@@ -32,7 +32,7 @@ const InventorySchema = new mongoose.Schema(
     file_mimetype: {
     type: String,
     },
-    supplier: {
+    inventoryType: {
     type: String,// ---
     },
     manufacturepn: {
@@ -44,22 +44,22 @@ const InventorySchema = new mongoose.Schema(
     deliveryCost: {
         type: Number, // --
     },
-    sourceCountry: {
+    sourceAddress: {
         type: String, // --
     },
-    specs: {
-        type: String, // --
+    UseCases: {
+        type: Array, // --
     },
-    department: {
+    brand: {
         type: String, // -- These are Departments in this app, This should later be made to an array
     },
-    subdepartment: {
+    productLifeSpan: {
         type: String, // -- These are Departments in this app, This should later be made to an array
     },
     brand: {
         type: String,// --
     },
-    color: {
+    sourceContactno: {
         type: String,// ---
     },
     costPrice: {
@@ -68,40 +68,39 @@ const InventorySchema = new mongoose.Schema(
     salePrice: {
         type: Number, // --
     },
-    inventoryDetails: {
+    profit: {
+        type: Number, // --
+    },
+    sourceWebsite: {
         type: String,// -- This should later be made to an array
     },
-    sourceLink: {
+    sourceEmail: {
         type: String, // -- This should later be made to an array
     },
     sourcingLeadTimes: {
         type: String, // -- This should later be made to an array
     },
-    store: {
-        type: String, // --  This should later be made to an array
+    storesDeployed: {
+        type: Array, // --  This should later be made to an array
     },
-    likes: {
-        type: String, // This should later be made to an array
-    },
-    comments: {
-        type: String, // This should later be made to an array
-    }
-    ,
-    inventoryAttributes: {
-        type: String, // This should later be made to an object/specs
+    BallanceNow: {
+        type: Number, // This should later be made to an array
     }
     ,
     addtoCarts: {
-        type: String, // This should later be made to an array
+        type: Array, // This should later be made to an array
     },
-    shares: {
-        type: String, // This should later be made to an array
+    likes: {
+        type: Array, // This should later be made to an array
     },
     category: {
         type: String, // This should later be made to an array
     },
+    status: {
+        type: String, // This should later be made to an array
+    },
     stars: {
-        type: Number, // This should later be made to an array
+        type: Array, // This should later be made to an array
     },
     uploadedOnline: {
     type: String,// This should later be made to an array
