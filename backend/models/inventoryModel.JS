@@ -38,6 +38,9 @@ const InventorySchema = new mongoose.Schema(
     manufacturepn: {
         type: String,// ---
     },
+    source: {
+        type: String,// ---
+    },
     quantity: {
     type: Number,// ---
     },
@@ -54,7 +57,7 @@ const InventorySchema = new mongoose.Schema(
         type: String, // -- These are Departments in this app, This should later be made to an array
     },
     productLifeSpan: {
-        type: String, // -- These are Departments in this app, This should later be made to an array
+        type: Number, // -- These are Departments in this app, This should later be made to an array
     },
     brand: {
         type: String,// --
@@ -62,10 +65,10 @@ const InventorySchema = new mongoose.Schema(
     sourceContactno: {
         type: String,// ---
     },
-    costPrice: {
+    costValue: {
         type: Number,// ---
     },
-    salePrice: {
+    saleValue: {
         type: Number, // --
     },
     profit: {
@@ -115,12 +118,3 @@ const InventorySchema = new mongoose.Schema(
 const Inventory = mongoose.model("Inventory", InventorySchema );
 module.exports = Inventory;
 
-// Inventory model and controller fields the same
-// category
-// -- Gearmotors,Servo Motors,Motors and Gearboxes, And Spares
-// -- Lights and Lighting equipment
-// -- Ellectronics and Ellectrical Supplies
-// -- Industrial Supplies        
-// -- Security and Cameras
-// 
-// brand
