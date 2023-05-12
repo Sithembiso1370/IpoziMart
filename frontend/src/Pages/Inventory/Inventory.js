@@ -32,12 +32,9 @@ const Inventory = () => {
       { name: "deliveryCost", label: "deliveryCost", type: "number" },
       { name: "sourceAddress", label: "sourceAddress", type: "text" },
       { name: "storesDeployed", label: "storesDeployed", type: "text" },
-      { name: "deliveryCost", label: "deliveryCost (R)", type: "number" },
       { name: "brand", label: "brand", type: "text" },
       { name: "productLifeSpan", label: "productLifeSpan (Days)", type: "number" },
-      { name: "sourceContactno", label: "sourceContactno", type: "number"},
-      { name: "costValue", label: "costValue", type: "number" },
-      { name: "saleValue", label: "saleValue", type: "number" },
+      { name: "sourceContactno", label: "sourceContactno", type: "tel"},
       { name: "category", label: "category", type: "text" },
       { name: "status", label: "status", type: "text" }
     ]
@@ -127,6 +124,32 @@ const Inventory = () => {
 
   };
 
+  const inventoryTotalNoProducts = ()=>{
+    let total = 0;
+    inventoryList.forEach(element => {
+      total = total + 1;
+    });
+
+    return total;
+  }
+
+  const inventoryTotalCost = ()=>{
+    let total = 0;
+    inventoryList.forEach(element => {
+      total += element.costValue;
+    });
+
+    return total;
+  }
+
+  const inventoryTotalRevenue = ()=>{
+    let total = 0;
+    inventoryList.forEach(element => {
+      total = total + (element.saleValue);
+    });
+    return total;
+  }
+
   const handleEdit = async (event,inventory) => {
     event.preventDefault();
     const confirmed = window.confirm(`Are you sure you want to Edit ${inventory.productDescription}?`);
@@ -140,6 +163,20 @@ const Inventory = () => {
     <div  className='inventoryPage'>
       <div className='label'>
       <h1>Inventory Management</h1>
+      <div>
+        <div>
+          Total Products on current stock :  {inventoryTotalNoProducts()} products
+        </div>
+        <div>
+          Total Cost for all current stock : R {inventoryTotalCost()}.00
+        </div>
+        <div>
+          Total Value for all current stock : R {inventoryTotalRevenue()}.00
+        </div>
+        <div>
+          Total Profit for all current stock : R {inventoryTotalRevenue()-inventoryTotalCost()}.00
+        </div>
+      </div>
       </div>
       <div className='formCrud'>
       {crudForm}
@@ -153,12 +190,10 @@ const Inventory = () => {
               <tr>
                 <th>Created By</th>
                 <th>Attachement</th>
-                <th>KhonaMartStockId</th> 
                 <th>title</th>
                 <th>Description</th>
                 <th>quantity</th>
-                <th>deliveryCost</th>
-                <th>costValue</th>
+                <th>Total Cost</th>
                 <th>saleValue</th>
                 <th>inventoryType</th> 
                 <th>Category</th>
@@ -174,7 +209,7 @@ const Inventory = () => {
               {
                 
                 inventoryList ?
-              inventoryList.slice(0, 10).map((inventory) => (
+              inventoryList.slice(0, 30).map((inventory) => (
                 <tr key={inventory._id}>
                   
                   <td>{inventory.createdBy}</td>
@@ -183,13 +218,11 @@ const Inventory = () => {
                       <img src={inventory.url} alt={inventory.productDescription} height="50" />
                     )}
                   </td>
-                  <td>{inventory.KhonaMartStockId}</td>
 
                   <td>{inventory.title}</td>
                   <td>{inventory.productDescription}</td>
                   <td>{inventory.quantity}</td>
-                  <td>{inventory.deliveryCost}</td>
-                  <td>{inventory.costValue}</td>
+                  <td>{inventory.deliveryCost+inventory.costValue}</td>
                   <td>{inventory.saleValue}</td>
                   <td>{inventory.inventoryType}</td>
                   <td>{inventory.category}</td>

@@ -1,0 +1,85 @@
+
+
+.createForm {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-rows: 1fr 8fr 2fr;
+    overflow: none;
+}
+
+.createForm:nth-child(0) {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: yellow;
+    
+}
+
+.createForm>.formInputsContainer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr ;
+    gap: 2%;
+    overflow: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.createForm>.formInputsContainer > .formInputContainer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 2fr 4fr;
+    align-items: center;
+    justify-content: center;
+}
+
+.createForm>.formInputsContainer > .formInputContainer > label {
+    position: relative;
+    width: 80%;
+    height: 80%;
+    display: flex;
+    word-wrap: break-word;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+}
+
+.createForm>.formInputsContainer > .formInputContainer > input {
+    position: relative;
+    width: 80%;
+    height: 80%;
+    border-radius: 30px;
+}
+
+
+.createForm> .formButtonsContainer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.createForm> .formButtonsContainer > button {
+    position: relative;
+    width: 50%;
+    height: 80%;
+    border-radius: 25px;
+}
+
+.createForm> .formButtonsContainer > button:hover {
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+

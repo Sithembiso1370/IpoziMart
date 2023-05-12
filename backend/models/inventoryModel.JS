@@ -59,6 +59,9 @@ const InventorySchema = new mongoose.Schema(
     productLifeSpan: {
         type: Number, // -- These are Departments in this app, This should later be made to an array
     },
+    productPackageID: {
+        type: Number, // -- These are Departments in this app, This should later be made to an array
+    },
     brand: {
         type: String,// --
     },
@@ -67,9 +70,11 @@ const InventorySchema = new mongoose.Schema(
     },
     costValue: {
         type: Number,// ---
+        trim: true
     },
     saleValue: {
         type: Number, // --
+        trim: true
     },
     profit: {
         type: Number, // --
@@ -98,6 +103,9 @@ const InventorySchema = new mongoose.Schema(
     },
     category: {
         type: String, // This should later be made to an array
+    },
+    deliveringCost: {
+        type: Number, // --
     },
     status: {
         type: String, // This should later be made to an array

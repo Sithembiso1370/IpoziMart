@@ -32,13 +32,13 @@ const upload = multer({
 });
 
 
-Router.post('/',upload.single('upload'),saveInventory);
+Router.post('/',upload.single('productupload'),saveInventory);
 
 Router.get('/', getInventories);
 
 Router.get("/:id",getOneInventory);
 
-Router.put("/:id", upload.single("upload"),updateOneInventory);
+Router.put("/:id", upload.single("productupload"),updateOneInventory);
 
 Router.delete("/:id", deleteOneInventory);
   
