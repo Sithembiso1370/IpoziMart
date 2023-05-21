@@ -44,6 +44,9 @@ const InventorySchema = new mongoose.Schema(
     quantity: {
     type: Number,// ---
     },
+    UnitsPerItem: {
+        type: Number,// ---
+    },
     deliveryCost: {
         type: Number, // --
     },

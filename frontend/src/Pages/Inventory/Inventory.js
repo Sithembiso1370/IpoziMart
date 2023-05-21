@@ -25,7 +25,7 @@ const Inventory = () => {
       { name: "costValue", label: "Cost (R)", type: "number" },
       { name: "saleValue", label: "Sale (R)", type: "number" },
       { name: "productupload", label: "product", type: "file" },
-      { name: "sources", label: "Sources",  type: "text"},
+      { name: "source", label: "Sources",  type: "text"},
       { name: "manufacturepn", label: "Manufacture PN", type: "text" },
       { name: "inventoryType", label: "inventoryType", type: "text" },
       { name: "quantity", label: "Quantity", type: "number"},
@@ -127,7 +127,33 @@ const Inventory = () => {
   const inventoryTotalNoProducts = ()=>{
     let total = 0;
     inventoryList.forEach(element => {
-      total = total + 1;
+      if(element.inventoryType  !== 'Operational Equipment'){
+        total = total + element.quantity;
+      }
+    });
+
+    return total;
+  }
+
+  const inventoryTotalNoProductsInStock = ()=>{
+    let total = 0;
+    inventoryList.forEach(element => {
+      if(element.status  === 'In Stock' && element.inventoryType  !== 'Operational Equipment'){
+        total = total + element.quantity;
+      }
+
+    });
+
+    return total;
+  }
+
+  const inventoryTotalNoProductsEquipment = ()=>{
+    let total = 0;
+    inventoryList.forEach(element => {
+      if(element.inventoryType  === 'Operational Equipment'){
+        total = total + element.costValue*element.quantity;
+      }
+
     });
 
     return total;
@@ -136,7 +162,20 @@ const Inventory = () => {
   const inventoryTotalCost = ()=>{
     let total = 0;
     inventoryList.forEach(element => {
-      total += element.costValue;
+      if( element.inventoryType  !== 'Operational Equipment'){
+        total += element.costValue*element.quantity;
+      }
+    });
+
+    return total;
+  }
+
+  const inventoryTotalCostInStock = ()=>{
+    let total = 0;
+    inventoryList.forEach(element => {
+      if(element.status  === 'In Stock' && element.inventoryType  !== 'Operational Equipment'){
+        total += element.costValue*element.quantity;
+      }
     });
 
     return total;
@@ -145,7 +184,21 @@ const Inventory = () => {
   const inventoryTotalRevenue = ()=>{
     let total = 0;
     inventoryList.forEach(element => {
-      total = total + (element.saleValue);
+      if(element.inventoryType  !== 'Operational Equipment'){
+        total = total + element.saleValue*element.quantity;
+      }
+      
+    });
+    return total;
+  }
+
+  const inventoryTotalRevenueInStock = ()=>{
+    let total = 0;
+    inventoryList.forEach(element => {
+      if(element.status  === 'In Stock' && element.inventoryType  !== 'Operational Equipment'){
+        total = total + element.saleValue*element.quantity;
+      }
+      
     });
     return total;
   }
@@ -165,16 +218,35 @@ const Inventory = () => {
       <h1>Inventory Management</h1>
       <div>
         <div>
-          Total Products on current stock :  {inventoryTotalNoProducts()} products
+          Total Products Added :  {inventoryTotalNoProducts()} products
         </div>
         <div>
-          Total Cost for all current stock : R {inventoryTotalCost()}.00
+          Total Products on Stocked on current stock :  {inventoryTotalNoProductsInStock()} products
         </div>
         <div>
-          Total Value for all current stock : R {inventoryTotalRevenue()}.00
+          Total Cost for all Added stock : R {inventoryTotalCost()}.00
         </div>
         <div>
-          Total Profit for all current stock : R {inventoryTotalRevenue()-inventoryTotalCost()}.00
+          Total Revenue for all Added Stock : R {inventoryTotalRevenue()}.00
+        </div>
+        <div>
+          Total Profit for all Added Stock : R {inventoryTotalRevenue()-inventoryTotalCost()}.00
+        </div>
+        <hr/>
+        <div>
+          Total Cost for all In Stock: R {inventoryTotalCostInStock()}.00
+        </div>
+        <div>
+          Total Expected Revenue for all In stock : R {inventoryTotalRevenueInStock()}.00
+        </div>
+        <div>
+          Total Profit for all In stock : R {inventoryTotalRevenueInStock()-inventoryTotalCostInStock()}.00
+        </div>
+
+
+
+        <div>
+          Total cost of all Equipment needed : R {inventoryTotalNoProductsEquipment()}.00
         </div>
       </div>
       </div>
@@ -193,6 +265,7 @@ const Inventory = () => {
                 <th>title</th>
                 <th>Description</th>
                 <th>quantity</th>
+  
                 <th>Total Cost</th>
                 <th>saleValue</th>
                 <th>inventoryType</th> 
