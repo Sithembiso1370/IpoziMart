@@ -242,6 +242,9 @@ const Inventory = () => {
         <div>
           Total Profit for all In stock : R {inventoryTotalRevenueInStock()-inventoryTotalCostInStock()}.00
         </div>
+        <div>
+          Expected Moving ROI % for all In stock :  {((inventoryTotalRevenueInStock()-inventoryTotalCostInStock())/inventoryTotalCostInStock())*100} %
+        </div>
 
 
 
