@@ -214,13 +214,14 @@ const Inventory = () => {
   }
   const [crudForm, setcrudForm] = useState(<InventoryForm fetchInventory={fetchInventory} btnLabel='Save' label="create" isLoading={isLoading} formData={formData} onSuccess={handleSuccess} handleSubmit={handleSubmit} handleChange={handleInputChange} handleFileChang={handleFileChange} placeholders={placeholders}/>)
 
- const handeSearch = (e) =>{
+ const handeTitleSearch = (e) =>{
   e.preventDefault()
   console.log(e.target.value);
 
   const newList = []
   inventoryList.forEach(element => {
     const title = element.title.toLowerCase();
+    
     const currValue = e.target.value.toLowerCase();
     if(title.includes(currValue)){
       newList.push(element)
@@ -228,13 +229,22 @@ const Inventory = () => {
     
   });
 
-  if(newList.length < 1){
-    console.log("no data found");
+  if(e.target.value === ''){
+    console.log("nothing typed");
+    fetchInventory()
+    setInventoryList(inventoryList)
   }
   else{
-    console.log("matching data found")
-    setInventoryList(newList)
+    if(newList.length < 1){
+      console.log("no data found");
+      setInventoryList(inventoryList)
+    }
+    else{
+      console.log("matching data found")
+      setInventoryList(newList)
+    }
   }
+
   
   
  }
@@ -259,6 +269,9 @@ const Inventory = () => {
         <div>
           Total Profit for all Added Stock : R {inventoryTotalRevenue()-inventoryTotalCost()}.00
         </div>
+        <div>
+          Expected Moving ROI % for all Added :  {((inventoryTotalRevenue()-inventoryTotalCost())/inventoryTotalCost())*100} %
+        </div>
         <hr/>
         <div>
           Total Cost for all In Stock: R {inventoryTotalCostInStock()}.00
@@ -282,7 +295,8 @@ const Inventory = () => {
       </div>
       <div className='formCrud'>
       <div>
-          <input type="text" placeholder='search' onChange={(e)=>handeSearch(e)}/>
+          <input type="text" placeholder='Title search...' onChange={(e)=>handeTitleSearch(e)}/>
+          <input type="text" placeholder='Inventory type search...' />
         </div>
       {crudForm}
       </div>
