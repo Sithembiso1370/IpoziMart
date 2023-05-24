@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import InventoryForm from './InventoryForm';
 import './Inventory.css'
+import Moment from 'react-moment';
+import 'moment-timezone';
 
 
 
@@ -61,6 +63,8 @@ const Inventory = () => {
     // console.log("Inventory length = ",inventoryList.length());
     setIsLoading(false);
   };
+
+
 
   useEffect(() => {
     fetchInventory();
@@ -210,12 +214,35 @@ const Inventory = () => {
   }
   const [crudForm, setcrudForm] = useState(<InventoryForm fetchInventory={fetchInventory} btnLabel='Save' label="create" isLoading={isLoading} formData={formData} onSuccess={handleSuccess} handleSubmit={handleSubmit} handleChange={handleInputChange} handleFileChang={handleFileChange} placeholders={placeholders}/>)
 
+ const handeSearch = (e) =>{
+  e.preventDefault()
+  console.log(e.target.value);
 
+  const newList = []
+  inventoryList.forEach(element => {
+    const title = element.title.toLowerCase();
+    const currValue = e.target.value.toLowerCase();
+    if(title.includes(currValue)){
+      newList.push(element)
+    }
+    
+  });
+
+  if(newList.length < 1){
+    console.log("no data found");
+  }
+  else{
+    console.log("matching data found")
+    setInventoryList(newList)
+  }
+  
+  
+ }
   // console.log('inventoryList.length : ', inventoryList.length)
   return (
     <div  className='inventoryPage'>
       <div className='label'>
-      <h1>Inventory Management</h1>
+      <h1>Central Inventory Management</h1>
       <div>
         <div>
           Total Products Added :  {inventoryTotalNoProducts()} products
@@ -254,9 +281,13 @@ const Inventory = () => {
       </div>
       </div>
       <div className='formCrud'>
+      <div>
+          <input type="text" placeholder='search' onChange={(e)=>handeSearch(e)}/>
+        </div>
       {crudForm}
       </div>
       <div className='formTable'>
+
         {isLoading ? (
           <p>Loading...</p>
         ) : (
@@ -268,7 +299,6 @@ const Inventory = () => {
                 <th>title</th>
                 <th>Description</th>
                 <th>quantity</th>
-  
                 <th>Total Cost</th>
                 <th>saleValue</th>
                 <th>inventoryType</th> 
@@ -285,10 +315,10 @@ const Inventory = () => {
               {
                 
                 inventoryList ?
-              inventoryList.slice(0, 30).map((inventory) => (
+              inventoryList.slice(0, 100).map((inventory) => (
                 <tr key={inventory._id}>
                   
-                  <td>{inventory.createdBy}</td>
+                  <td>{inventory.createdBy} | <Moment fromNow>{inventory.createdAt }</Moment>  </td>
                   <td>
                     {inventory.url && (
                       <img src={inventory.url} alt={inventory.productDescription} height="50" />
