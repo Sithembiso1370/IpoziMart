@@ -244,59 +244,85 @@ const Inventory = () => {
       setInventoryList(newList)
     }
   }
-
-  
-  
  }
-  // console.log('inventoryList.length : ', inventoryList.length)
+
+ const handeinventoryTypeSearch = (e) =>{
+  e.preventDefault()
+  console.log(e.target.value);
+  console.log("Inventory list = ",inventoryList)
+  const newList = []
+  inventoryList.forEach(element => {
+    const inventoryType = element.inventoryType;
+    
+    const currValue = e.target.value;
+    if(inventoryType === currValue){
+      newList.push(element)
+    }
+    
+  });
+
+  if(e.target.value === ''){
+    console.log("nothing typed");
+    fetchInventory()
+    setInventoryList(inventoryList)
+  }
+  else{
+    if(newList.length < 1){
+      console.log("no data found");
+      setInventoryList(inventoryList)
+    }
+    else{
+      console.log("matching data found")
+      setInventoryList(newList)
+    }
+  }
+ }
+
   return (
     <div  className='inventoryPage'>
       <div className='label'>
       <h1>Central Inventory Management</h1>
       <div>
-        <div>
-          Total Products Added :  {inventoryTotalNoProducts()} products
-        </div>
-        <div>
-          Total Products on Stocked on current stock :  {inventoryTotalNoProductsInStock()} products
-        </div>
-        <div>
-          Total Cost for all Added stock : R {inventoryTotalCost()}.00
-        </div>
-        <div>
-          Total Revenue for all Added Stock : R {inventoryTotalRevenue()}.00
-        </div>
-        <div>
-          Total Profit for all Added Stock : R {inventoryTotalRevenue()-inventoryTotalCost()}.00
-        </div>
-        <div>
-          Expected Moving ROI % for all Added :  {((inventoryTotalRevenue()-inventoryTotalCost())/inventoryTotalCost())*100} %
-        </div>
+          <div>
+            Total Products Added :  {inventoryTotalNoProducts()} products
+          </div>
+          <div>
+            Total Products on Stocked on current stock :  {inventoryTotalNoProductsInStock()} products
+          </div>
+          <div>
+            Total Cost for all Added stock : R {inventoryTotalCost()}.00
+          </div>
+          <div>
+            Total Revenue for all Added Stock : R {inventoryTotalRevenue()}.00
+          </div>
+          <div>
+            Total Profit for all Added Stock : R {inventoryTotalRevenue()-inventoryTotalCost()}.00
+          </div>
+          <div>
+            Expected Moving ROI % for all Added :  {((inventoryTotalRevenue()-inventoryTotalCost())/inventoryTotalCost())*100} %
+          </div>
         <hr/>
-        <div>
-          Total Cost for all In Stock: R {inventoryTotalCostInStock()}.00
-        </div>
-        <div>
-          Total Expected Revenue for all In stock : R {inventoryTotalRevenueInStock()}.00
-        </div>
-        <div>
-          Total Profit for all In stock : R {inventoryTotalRevenueInStock()-inventoryTotalCostInStock()}.00
-        </div>
-        <div>
-          Expected Moving ROI % for all In stock :  {((inventoryTotalRevenueInStock()-inventoryTotalCostInStock())/inventoryTotalCostInStock())*100} %
-        </div>
-
-
-
-        <div>
-          Total cost of all Equipment needed : R {inventoryTotalNoProductsEquipment()}.00
-        </div>
+          <div>
+            Total Cost for all In Stock: R {inventoryTotalCostInStock()}.00
+          </div>
+          <div>
+            Total Expected Revenue for all In stock : R {inventoryTotalRevenueInStock()}.00
+          </div>
+          <div>
+            Total Profit for all In stock : R {inventoryTotalRevenueInStock()-inventoryTotalCostInStock()}.00
+          </div>
+          <div>
+            Expected Moving ROI % for all In stock :  {((inventoryTotalRevenueInStock()-inventoryTotalCostInStock())/inventoryTotalCostInStock())*100} %
+          </div>
+          <div>
+            Total cost of all Equipment needed : R {inventoryTotalNoProductsEquipment()}.00
+          </div>
       </div>
       </div>
       <div className='formCrud'>
       <div>
           <input type="text" placeholder='Title search...' onChange={(e)=>handeTitleSearch(e)}/>
-          <input type="text" placeholder='Inventory type search...' />
+          <input type="text" placeholder='Inventory type search...' onChange={(e)=>handeinventoryTypeSearch(e)}/>
         </div>
       {crudForm}
       </div>
@@ -329,7 +355,7 @@ const Inventory = () => {
               {
                 
                 inventoryList ?
-              inventoryList.slice(0, 100).map((inventory) => (
+              inventoryList.slice(0, 150).map((inventory) => (
                 <tr key={inventory._id}>
                   
                   <td>{inventory.createdBy} | <Moment fromNow>{inventory.createdAt }</Moment>  </td>

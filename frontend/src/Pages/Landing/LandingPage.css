@@ -1,0 +1,43 @@
+
+
+.LandingPage {
+    position: relative;
+    width: 100%;
+    height: 2800px;
+    background-color: orangered;
+    display: grid;
+    grid-template-rows: 5% 35% 60%
+}
+
+.Navbar {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 20% 50% 30%;
+}
+
+.Navbar> div {
+    border: 1px solid black;
+}
+
+.Body1 {
+    background-color: rgba(0, 0, 0, 0.494);
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 30% 40% 30%;
+}
+
+.Body1 > div {
+    border: 1px solid black;
+}
+
+.Body2 {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-rows: 45% 40% 15%;
+}
