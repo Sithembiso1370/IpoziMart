@@ -3,11 +3,34 @@
 .inventoryPage {
   position: relative;
   width: 100%;
-  height: 1000px;
+  height: 2000px;
   display: grid;
-  grid-template-rows:  2fr  3fr 8fr;
+  grid-template-rows:  2fr  2fr 6fr;
+  gap: 1%;
 }
 
+
+table > thead {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+table > thead > tr {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+table > thead > tr > th {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  background-color: orangered;
+  color: whitesmoke;
+  /* font-weight: bolder; */
+}
 
 table > tbody {
   position: relative;
@@ -15,3 +38,32 @@ table > tbody {
   height: 100%;
   overflow-y: scroll;
 }
+
+table > tbody > tr {
+  position: relative;
+  /* width: 100%; */
+  height: 100%;
+
+}
+
+table > tbody > tr > td {
+  position: relative;
+  width: 100%;
+  height: 100px;
+  align-items: center;
+  justify-content: center;
+}
+
+table > tbody > tr > td > button {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+table > tbody > tr > td > img {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+

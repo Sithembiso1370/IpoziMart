@@ -97,7 +97,7 @@ const InventoryForm = (props) => {
       ))}
       </div>
       <div className="formButtonsContainer">
-      <button type="submit">Submit</button>
+      <button type="submit">Save</button>
       </div>
     </form>
   );
