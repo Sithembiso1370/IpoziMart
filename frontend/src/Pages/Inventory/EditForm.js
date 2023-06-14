@@ -3,13 +3,13 @@ import axios from 'axios';
 import './InventoryForm.css'
 // import { input } from '@testing-library/user-event/dist/types/utils';
 
-const InventoryForm = (props) => {
+const EditForm = (props) => {
   const [formData, setFormData] = useState({});
   const [formAction, setFormAction] = useState({});
 
   useEffect(() => {
     // Set the form action
-    props.btnLabel  ? setFormAction(props.btnLabel ) : setFormAction('Save');
+
   }, []);
 
 
@@ -21,65 +21,35 @@ const InventoryForm = (props) => {
     });
   };
   
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    // Create a new formData object to submit
-    const formDataToSubmit = new FormData();
-    Object.entries(formData).forEach(([key, value]) => {
-      formDataToSubmit.append(key, value);
-    });
-
-    // Check the form label propert to decide on post or put request
-    // if(formAction === 'Edit'){
-    //   alert("Edit!!!!!")
-    //   console.log("inventory item before edit : ",props.inventoryItem);
-    //   console.log("inventory item After edit : ",formData);
-    // }
-    // else if (props.btnLabel === 'Save'){
-    //   alert("saved!!!!!")
-    // }
-
-    // Make a POST request to the server with the form data
-    try {
-      const response = await axios.post('http://localhost:5000/api/inventory', formDataToSubmit);
-      console.log('Product saved successfully!!!!', response.data);
-      alert('Product saved successfully!!!!');
-      props.fetchInventory()
-      setFormData({})
-    } catch (error) {
-      console.log('Error submitting form:', error.response.data);
-      alert('Error submitting form:')
-    }
-  };
 
   const handleUpdate = async (event) => {
     event.preventDefault();
-
+  
     // Create a new formData object to submit
     const formDataToSubmit = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
       formDataToSubmit.append(key, value);
     });
-
+  
     // Check the form label propert to decide on post or put request
-
+  
     alert("Edit!!!!!")
-    console.log("inventory item before edit : ",event.item2Update);
-    console.log("inventory item After edit : ",formData);
-
-    // Make a POST request to the server with the form data
-    // try {
-    //   const response = await axios.post('http://localhost:5000/api/inventory', formDataToSubmit);
-    //   console.log('Product saved successfully!!!!', response.data);
-    //   alert('Product saved successfully!!!!');
-    //   props.fetchInventory()
-    //   setFormData({})
-    // } catch (error) {
-    //   console.log('Error submitting form:', error.response.data);
-    //   alert('Error submitting form:')
-    // }
+    console.log("inventory item before edit: ", props.inventory._id);
+    console.log("inventory item after edit: ", formData);
+  
+    // Make a PUT request to the server with the form data
+    try {
+      const response = await axios.put(`http://localhost:5000/api/inventory/${props.inventory._id}`, formDataToSubmit);
+      console.log('Product updated successfully!!!!', response.data);
+      alert('Product updated successfully!!!!');
+      props.fetchInventory();
+      setFormData({});
+    } catch (error) {
+      console.log('Error submitting form:', error);
+      alert('Error submitting form:');
+    }
   };
+  
 
 
 
@@ -143,14 +113,10 @@ const InventoryForm = (props) => {
       ))}
       </div>
       <div className="formButtonsContainer">
-        {
-          formAction === 'Edit' ? <button type="submit" item2Update={props.inventoryItem} onClick={(e)=>handleUpdate(e)}>Update</button>: <button type="submit" onClick={(e)=>handleSubmit(e)}>Save</button>
-        }
-      
+          <button type="submit" item2Update={props.inventoryItem} onClick={(e)=>handleUpdate(e)}>Update</button>
       </div>
     </form>
   );
 };
 
-export default InventoryForm;
-
+export default EditForm;

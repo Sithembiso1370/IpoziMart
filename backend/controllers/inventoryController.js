@@ -113,6 +113,7 @@ exports.updateOneInventory = async (req, res) => {
   try {
     const enquiry = await Inventory.findById(req.params.id);
     if (!enquiry) return res.status(404).send('Inventory not found');
+
     if (req.file) {
       await cloudinary.uploader.destroy(enquiry.public_id);
       const result = await cloudinary.uploader.upload(req.file.path, {
@@ -125,20 +126,28 @@ exports.updateOneInventory = async (req, res) => {
       enquiry.file_path = req.file.path;
       enquiry.file_mimetype = req.file.mimetype;
       const uploadedOnline = result ? 'yes' : 'no';
-      enquiry.uploadedOnline = uploadedOnline ;
+      enquiry.uploadedOnline = uploadedOnline;
     }
+
     enquiry.createdBy = 'SithembisoUpdate';
+
+    // Iterate over the properties of req.body
     for (let key in req.body) {
-      if (req.body[key] !== '') {
-        enquiry[key] = req.body[key];
+      if (req.body.hasOwnProperty(key) && enquiry.schema.paths[key]) {
+        // Update the enquiry object if the value is not an empty string
+        if (req.body[key] !== '') {
+          enquiry[key] = req.body[key];
+        }
       }
     }
+
     await enquiry.save();
     res.send('Inventory updated successfully.');
   } catch (error) {
     res.status(500).send(error);
   }
 }
+
 
 
 exports.deleteOneInventory = async (req, res) => {

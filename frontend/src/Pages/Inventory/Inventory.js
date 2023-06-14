@@ -4,11 +4,17 @@ import InventoryForm from './InventoryForm';
 import './Inventory.css'
 import Moment from 'react-moment';
 import 'moment-timezone';
+import { Inventories1 } from './sampleInventory';
+import EditForm from './EditForm';
+
+
+
 
 
 
 const Inventory = () => {
   const [inventoryList, setInventoryList] = useState([]);
+  const [inventoryItem, setinventoryItem] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({});
   const [departmentCategories, setdepartmentCategories] = useState(['Upper Body','Lower Body','T-Shirts'])
@@ -52,7 +58,8 @@ const Inventory = () => {
         setInventoryList(res.data)
       })
       .catch((err)=>{
-        console.log("axios error : ",err)
+        console.log("axios error : ",err);
+        setInventoryList(Inventories1);
       });
       
       
@@ -209,10 +216,12 @@ const Inventory = () => {
 
   const handleEdit = async (event,inventory) => {
     event.preventDefault();
+    // SET THE INVENTORY ITEM BEING CHANGED
+    setinventoryItem(inventory);
     const confirmed = window.confirm(`Are you sure you want to Edit ${inventory.productDescription}?`);
-    setcrudForm(<InventoryForm btnLabel='Update' label="edit" isLoading={isLoading} formData={formData} onSuccess={handleSuccess} handleSubmit={handleSubmit} handleChange={handleChange} handleFileChang={handleFileChange} placeholders={placeholders}/>)
+    setcrudForm(<EditForm inventory={inventory} placeholders={placeholders}/>)
   }
-  const [crudForm, setcrudForm] = useState(<InventoryForm fetchInventory={fetchInventory} btnLabel='Save' label="create" isLoading={isLoading} formData={formData} onSuccess={handleSuccess} handleSubmit={handleSubmit} handleChange={handleInputChange} handleFileChang={handleFileChange} placeholders={placeholders}/>)
+  const [crudForm, setcrudForm] = useState(<InventoryForm inventoryItem={inventoryItem} fetchInventory={fetchInventory} btnLabel='Save' label="create" isLoading={isLoading} formData={formData} onSuccess={handleSuccess} handleSubmit={handleSubmit} handleChange={handleInputChange} handleFileChang={handleFileChange} placeholders={placeholders}/>)
 
  const handeTitleSearch = (e) =>{
   e.preventDefault()
@@ -411,6 +420,13 @@ const Inventory = () => {
                     { color : 'orangered'}
                   }
             >{inventoryTotalNoProductsEquipment()}.00</h3>
+          </div>
+          <div>
+            Total cost of all Equipment Aquired : R <h3
+                  style={
+                    { color : 'orangered'}
+                  }
+            >?.00</h3>
           </div>
       </div>
       </div>
