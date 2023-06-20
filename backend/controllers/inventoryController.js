@@ -112,6 +112,7 @@ exports.getOneInventory = async (req, res) => {
 exports.updateOneInventory = async (req, res) => {
   try {
     const enquiry = await Inventory.findById(req.params.id);
+    console.log("Inventory being changed is : ",enquiry._id)
     if (!enquiry) return res.status(404).send('Inventory not found');
 
     if (req.file) {
