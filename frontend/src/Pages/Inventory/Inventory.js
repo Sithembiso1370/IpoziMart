@@ -6,6 +6,7 @@ import Moment from 'react-moment';
 import 'moment-timezone';
 import { Inventories1 } from './sampleInventory';
 import EditForm from './EditForm';
+import { Link } from 'react-router-dom';
 
 
 
@@ -54,7 +55,7 @@ const Inventory = () => {
     try {
       axios.get('http://localhost:5000/api/inventory')
       .then((res)=>{
-        console.log("axios res = ",res);
+        console.log("axios res.data = ",res.data);
         setInventoryList(res.data)
       })
       .catch((err)=>{
@@ -467,7 +468,7 @@ const Inventory = () => {
               {
                 
                 inventoryList ?
-              inventoryList.slice(0, 150).map((inventory) => (
+              inventoryList.slice(0, 269).map((inventory) => (
                 <tr key={inventory._id}
                 style={
                   { 
@@ -478,8 +479,8 @@ const Inventory = () => {
                 >
                   
                   <td>
-                    {inventory.createdBy} 
-                    {/* <Moment fromNow>{inventory.createdAt }</Moment>  */}
+                    {/* {inventory.createdBy}  */}
+                    <Moment fromNow>{inventory.createdAt }</Moment> 
                    </td>
                   <td>
                     {inventory.url && (
@@ -499,7 +500,11 @@ const Inventory = () => {
                   <td>{inventory.brand}</td>
                   <td>{inventory.status}</td>
                   <td>
-                    <button onClick={(e) => handleEdit(e,inventory)}>Edit</button>
+                    <button 
+                    
+                    >
+                      <Link to={`/inventory/edit/${inventory._id}`}>Edit</Link>
+                      </button>
                   </td>
                   <td>
                     <button onClick={(e) => handleDelete(e,inventory._id)}>Delete</button>

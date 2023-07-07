@@ -111,43 +111,60 @@ exports.getOneInventory = async (req, res) => {
 //   Router.put("/:id", upload.single("enquiryupdate"), );
 exports.updateOneInventory = async (req, res) => {
   try {
-    const enquiry = await Inventory.findById(req.params.id);
-    console.log("Inventory being changed is : ",enquiry._id)
-    if (!enquiry) return res.status(404).send('Inventory not found');
+    const { id } = req.params;
+    console.log("The ID is : ", id);
+    const inventory = await Inventory.findById(id);
+    console.log("The inventory old is : ", inventory);
+    const newInventory = {};
+
+    if (!inventory) {
+      return res.status(404).send('Inventory not found');
+    }
 
     if (req.file) {
-      await cloudinary.uploader.destroy(enquiry.public_id);
+      if (inventory.public_id) {
+        // Delete the previous image from Cloudinary
+        await cloudinary.uploader.destroy(inventory.public_id);
+      }
+
       const result = await cloudinary.uploader.upload(req.file.path, {
         public_id: `images/${req.file.originalname}`,
         tags: 'images',
-        resource_type: "image",
+        resource_type: 'image',
       });
-      enquiry.url = result.secure_url;
-      enquiry.public_id = result.public_id;
-      enquiry.file_path = req.file.path;
-      enquiry.file_mimetype = req.file.mimetype;
-      const uploadedOnline = result ? 'yes' : 'no';
-      enquiry.uploadedOnline = uploadedOnline;
+
+      inventory.url = result.secure_url;
+      inventory.public_id = result.public_id;
+      inventory.file_path = req.file.path;
+      inventory.file_mimetype = req.file.mimetype;
+      inventory.uploadedOnline = result ? 'yes' : 'no';
     }
 
-    enquiry.createdBy = 'SithembisoUpdate';
+    inventory.createdBy = 'SithembisoUpdate';
 
-    // Iterate over the properties of req.body
+    // Update other fields from req.body if they exist
     for (let key in req.body) {
-      if (req.body.hasOwnProperty(key) && enquiry.schema.paths[key]) {
-        // Update the enquiry object if the value is not an empty string
-        if (req.body[key] !== '') {
-          enquiry[key] = req.body[key];
-        }
+      if (
+        req.body.hasOwnProperty(key) &&
+        key !== '_id' &&
+        inventory.schema.paths[key]
+      ) {
+        inventory[key] = req.body[key];
+        newInventory[key] = req.body[key];
       }
     }
+    console.log("The inventory New is : ", newInventory);
 
-    await enquiry.save();
-    res.send('Inventory updated successfully.');
+    // await inventory.save();
+    const inventoryStatus = await Inventory.findByIdAndUpdate(id, newInventory, { new: true });
+
+    // res.send('Inventory updated successfully.');
+    res.status(200).json({ status: 'success', data: inventoryStatus });
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).send('Error while updating inventory. Try again later.');
   }
-}
+};
+
 
 
 

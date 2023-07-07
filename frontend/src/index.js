@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import Inventory from './Pages/Inventory/Inventory';
 import LandingPage from './Pages/Landing/LandingPage';
+import EditInventory from './Pages/Inventory/EditInventory';
 
 
 const router = createBrowserRouter([
@@ -17,7 +18,36 @@ const router = createBrowserRouter([
     element: <LandingPage/>,
   },
   {
+    path: "/Todos",
+    element: <LandingPage/>,
+  },
+  {
     path: "/inventory",
+    element: <Inventory/>,
+  },
+  {
+    path: "/inventory/edit/:editId",
+    element: <EditInventory/>,
+  },
+  
+  {
+    path: "/Branches",
+    element: <Inventory/>,
+  },
+  {
+    path: "/Branch",
+    element: <Inventory/>,
+  },
+  {
+    path: "/Branch/Inventory",
+    element: <Inventory/>,
+  },
+  {
+    path: "/Branch/Finances",
+    element: <Inventory/>,
+  },
+  {
+    path: "/Branch/Hr",
     element: <Inventory/>,
   },
 ]);
